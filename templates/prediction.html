@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crime Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>🚔 Crime System</h2>
+        <a href="/dashboard">🏠 Dashboard</a>
+        <a href="/prediction">📊 Prediction</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <h2>📊 Crime Prediction</h2>
+        </div>
+
+        <!-- FORM CARD -->
+        <div class="form-card">
+
+            <form action="/predict" method="POST">
+
+                <!-- STATE -->
+                <label>📍 Select State</label>
+                <select name="state" id="state" onchange="loadDistricts()" required>
+                    <option value="">-- Choose State --</option>
+                    {% for s in states %}
+                        <option value="{{s}}">{{s}}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- DISTRICT -->
+                <label>🏙️ Select District</label>
+                <select name="district" id="district" required>
+                    <option value="">-- Choose District --</option>
+                </select>
+
+                <!-- YEAR -->
+                <label>📅 Select Year</label>
+                <select name="year" id="year" required>
+                    <option value="">-- Choose Year --</option>
+                </select>
+
+                <!-- BUTTON -->
+                <button type="submit">🚀 Predict Crime Risk</button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ✅ JAVASCRIPT (PLACE AT BOTTOM) -->
+<script>
+
+// LOAD DISTRICTS
+function loadDistricts() {
+    let state = document.getElementById("state").value;
+
+    console.log("Selected State:", state);
+
+    if (!state) return;
+
+    fetch(`/get_districts/${encodeURIComponent(state)}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log("District Data:", data);
+
+        let districtDropdown = document.getElementById("district");
+
+        districtDropdown.innerHTML = "<option value=''>-- Choose District --</option>";
+
+        data.districts.forEach(d => {
+            let option = document.createElement("option");
+            option.value = d;
+            option.text = d;
+            districtDropdown.appendChild(option);
+        });
+    })
+    .catch(error => console.error("Error loading districts:", error));
+}
+
+// LOAD YEARS
+window.onload = function() {
+    fetch(`/get_years`)
+    .then(response => response.json())
+    .then(data => {
+        let yearDropdown = document.getElementById("year");
+
+        yearDropdown.innerHTML = "<option value=''>-- Choose Year --</option>";
+
+        data.years.forEach(y => {
+            let option = document.createElement("option");
+            option.value = y;
+            option.text = y;
+            yearDropdown.appendChild(option);
+        });
+    })
+    .catch(error => console.error("Error loading years:", error));
+};
+
+</script>
+
+</body>
+</html>

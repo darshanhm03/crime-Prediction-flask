@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🚔 Crime System</h2>
+        <a href="/dashboard">🏠 Dashboard</a>
+        <a href="/prediction">📊 Prediction</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <h2>Welcome {{user}} 👋</h2>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>📊 Predictions</h3>
+                <p>Analyze crime risk</p>
+            </div>
+
+            <div class="card">
+                <h3>📍 Regions</h3>
+                <p>Multiple states & districts</p>
+            </div>
+
+            <div class="card">
+                <h3>⚠️ Risk Levels</h3>
+                <p>Low / Medium / High</p>
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions">
+            <a href="/prediction">
+                <button>🚀 Start Prediction</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

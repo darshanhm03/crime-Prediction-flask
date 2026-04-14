@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: url("/static/bg.jpg") no-repeat center center/cover;
+        }
+
+        /* DARK OVERLAY */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            top: 0;
+            left: 0;
+        }
+
+        /* LOGIN BOX */
+        .login-box {
+            position: relative;
+            z-index: 1;
+            width: 350px;
+            padding: 30px;
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .input-box label {
+            font-size: 14px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .signup {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .signup a {
+            color: #00b4d8;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="login-box">
+    <h2>🚔 Crime System Login</h2>
+
+    <form action="/login" method="POST">
+
+        <!-- USERNAME -->
+        <div class="input-box">
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <!-- BUTTON -->
+        <button class="btn">Login</button>
+
+    </form>
+
+    <div class="signup">
+        Don't have an account? <a href="/signup">Signup</a>
+    </div>
+</div>
+
+</body>
+</html>

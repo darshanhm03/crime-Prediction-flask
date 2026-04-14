@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body style="background:#0b132b; color:white; font-family:Arial;">
+
+<div style="display:flex;">
+
+    <!-- SIDEBAR -->
+    <div style="width:220px; background:#03045e; padding:20px; height:100vh;">
+        <h2>🚔 Crime System</h2>
+        <a href="/dashboard" style="color:white; display:block; margin:10px 0;">Dashboard</a>
+        <a href="/prediction" style="color:white; display:block; margin:10px 0;">Prediction</a>
+        <a href="/logout" style="color:white; display:block; margin:10px 0;">Logout</a>
+    </div>
+
+    <!-- MAIN -->
+    <div style="flex:1; padding:40px;">
+
+        <!-- RESULT CARD -->
+        <div style="background:#1c2541; padding:30px; border-radius:10px; width:400px; margin:auto; text-align:center;">
+            
+            <h2>📊 Prediction Result</h2>
+
+            <p><b>State:</b> {{state}}</p>
+            <p><b>District:</b> {{district}}</p>
+            <p><b>Year:</b> {{year}}</p>
+            <p><b>Total Crimes:</b> {{total}}</p>
+
+            <h3 style="color:
+                {% if risk == 'High' %} red
+                {% elif 'Medium' in risk %} orange
+                {% else %} lightgreen
+                {% endif %}
+            ">
+                🚨 Risk: {{risk}}
+            </h3>
+
+            <a href="/prediction">
+                <button style="margin-top:15px; padding:10px 20px; background:#00b4d8; border:none; color:white; border-radius:6px;">
+                    🔙 Back
+                </button>
+            </a>
+
+        </div>
+
+        <!-- CHART -->
+        <div style="width:80%; margin:50px auto;">
+            <canvas id="crimeChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const crimeData = {{ crime_data | tojson }};
+
+    const labels = Object.keys(crimeData);
+    const values = Object.values(crimeData);
+
+    const ctx = document.getElementById('crimeChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Crime Count',
+                data: values
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    labels: { color: "white" }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: "white" }
+                },
+                y: {
+                    ticks: { color: "white" }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

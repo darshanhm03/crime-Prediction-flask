@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crime Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Crime Prediction System</h1>
+
+    <form action="/predict" method="POST">
+        <select name="state" id="state" onchange="loadDistricts()" required>
+            <option value="">Select State</option>
+            {% for s in states %}
+                <option value="{{s}}">{{s}}</option>
+            {% endfor %}
+        </select>
+
+        <select name="district" id="district" required>
+            <option>Select District</option>
+        </select>
+
+        <select name="year" id="year" required></select>
+
+        <button type="submit">Predict</button>
+    </form>
+</div>
+
+<script>
+function loadDistricts() {
+    let state = document.getElementById("state").value;
+
+    fetch(`/get_districts/${state}`)
+    .then(res => res.json())
+    .then(data => {
+        let d = document.getElementById("district");
+        d.innerHTML = "";
+        data.districts.forEach(x => {
+            d.innerHTML += `<option value="${x}">${x}</option>`;
+        });
+    });
+}
+
+// Load years
+fetch('/get_years')
+.then(res => res.json())
+.then(data => {
+    let y = document.getElementById("year");
+    data.years.forEach(x => {
+        y.innerHTML += `<option value="${x}">${x}</option>`;
+    });
+});
+</script>
+
+</body>
+</html>
